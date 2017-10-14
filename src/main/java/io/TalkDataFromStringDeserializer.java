@@ -8,18 +8,35 @@ import static java.lang.Integer.valueOf;
 
 public class TalkDataFromStringDeserializer {
 
-    private static final String TALK_DATA_SPECIFICATION_PATTERN = "^\\D+ ((\\d+min)|(lightning))$";
+    private static final String TALK_DATA_TITLE_PATTERN = "\\D+";
+    private static final String QUICK_TALK_TIME_PATTERN = "lightning";
+    private static final String TALK_DATA_TIME_PATTERN = " ((\\d+min)|(" + QUICK_TALK_TIME_PATTERN + "))";
+    private static final String TALK_DATA_PATTERN = "^" + TALK_DATA_TITLE_PATTERN + TALK_DATA_TIME_PATTERN + "$";
+    private static final String EMPTY_STRING = "";
 
-    private final RegexValidator talkDataValidator = new RegexValidator(TALK_DATA_SPECIFICATION_PATTERN);
+    private static final int QUICK_TALK_TIME = 5;
+
+    private final RegexValidator talkDataValidator = new RegexValidator(TALK_DATA_PATTERN);
 
     public TalkData deserialize(String line) {
         return of(line).filter(talkDataValidator::isValid)
                        .map(this::extractFromValidString)
-                       .getOrElseThrow(IllegalArgumentException::new);
+                       .getOrElseThrow(this::dataInvalidException);
     }
 
     private TalkData extractFromValidString(String line) {
-        String name = line.replaceAll(" ((\\d+min)|(lightning))", "");
-        return new TalkData(name, line.endsWith("lightning") ? 5 : valueOf(line.replaceAll("\\D", "")));
+        return new TalkData(extractTitleFrom(line), extractTimeFrom(line));
+    }
+
+    private String extractTitleFrom(String line) {
+        return line.replaceAll(TALK_DATA_TIME_PATTERN, EMPTY_STRING);
+    }
+
+    private int extractTimeFrom(String line) {
+        return line.endsWith(QUICK_TALK_TIME_PATTERN) ? QUICK_TALK_TIME : valueOf(line.replaceAll(TALK_DATA_TITLE_PATTERN, EMPTY_STRING));
+    }
+
+    private RuntimeException dataInvalidException() {
+        return new IllegalArgumentException("Data does not match the pattern '" + TALK_DATA_PATTERN + "'");
     }
 }
