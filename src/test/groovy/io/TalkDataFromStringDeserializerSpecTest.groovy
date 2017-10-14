@@ -5,6 +5,7 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class TalkDataFromStringDeserializerSpecTest extends Specification {
+
     def deserializer = new TalkDataFromStringDeserializer()
 
     @Unroll
