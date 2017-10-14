@@ -12,9 +12,9 @@ class TalkDataParserSpecTest extends Specification {
         given:
         def dataSource = Mock Iterator
         def firstDataEntry = "example 10min"
-        def firstDeserializedEntry = Mock TalkData
+        def firstDeserializedEntry = new TalkData("example", 10)
         def secondDataEntry = "example lightning"
-        def secondDeserializedEntry = Mock TalkData
+        def secondDeserializedEntry = new TalkData("example", 5)
 
         when:
         def result = parser.parseAllFrom dataSource
@@ -58,7 +58,8 @@ class TalkDataParserSpecTest extends Specification {
         0 * deserializer._
 
         and: "exception thrown by the deserializer is rethrown"
-        deserializerException == thrown(IllegalArgumentException)
+        def actualException = thrown(IllegalArgumentException)
+        deserializerException == actualException
     }
 
     def "should throw if the data source is null"() {
