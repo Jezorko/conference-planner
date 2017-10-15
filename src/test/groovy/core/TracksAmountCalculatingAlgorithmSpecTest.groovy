@@ -1,11 +1,19 @@
 package core
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static data.SpecificationDatasets.SPECIFICATION_TALKS
 
 class TracksAmountCalculatingAlgorithmSpecTest extends Specification {
-    def "should calculate optimal tracks amount"() {
+
+    static ALGORITHMS_TO_TEST = [
+            new OptimalTracksAmountCalculatingAlgorithm(),
+            new SafeTracksAmountCalculatingAlgorithm()
+    ]
+
+    @Unroll
+    "#algorithm.getClass().getSimpleName() should calculate optimal tracks amount"() {
         when:
         def result = algorithm.calculateTracksAmountFor SPECIFICATION_TALKS
 
@@ -14,9 +22,6 @@ class TracksAmountCalculatingAlgorithmSpecTest extends Specification {
         result <= 3
 
         where:
-        algorithm << [
-                new OptimalTracksAmountCalculatingAlgorithm(),
-                new SafeTracksAmountCalculatingAlgorithm()
-        ]
+        algorithm << ALGORITHMS_TO_TEST
     }
 }
