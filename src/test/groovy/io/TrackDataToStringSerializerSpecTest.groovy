@@ -3,6 +3,7 @@ package io
 import core.TalkData
 import core.TrackData
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class TrackDataToStringSerializerSpecTest extends Specification {
 
@@ -32,7 +33,8 @@ class TrackDataToStringSerializerSpecTest extends Specification {
                 '02:30PM A World Without HackerNews 30min\n' +
                 '03:00PM Ruby on Rails Legacy App Maintenance 60min\n' +
                 '04:00PM Rails for Python Developers lightning\n' +
-                '05:00PM Networking Event'
+                '04:05PM Networking Event'
+        // TODO: Adjustment for specification error, we assume that the Networking Event doesn't have to start at a full hour
 
         when:
         def output = serializer.serialize(input, 1)
@@ -52,7 +54,8 @@ class TrackDataToStringSerializerSpecTest extends Specification {
         thrown Exception
     }
 
-    def "should throw if #field session talks are null"() {
+    @Unroll
+    "should throw if #field session talks are null"() {
         given:
         def input = new TrackData(morningSessionTalks, afternoonSessionTalks)
 
