@@ -17,7 +17,7 @@ class TalkDataReaderSpecTest extends Specification {
         def secondDeserializedEntry = new TalkData("example", 5)
 
         when:
-        def result = reader.parseAllFrom dataSource
+        def result = reader.readAllFrom dataSource
 
         then: "the first data entry is parsed"
         1 * dataSource.hasNext() >> true
@@ -44,7 +44,7 @@ class TalkDataReaderSpecTest extends Specification {
         def deserializerException = new IllegalArgumentException()
 
         when:
-        reader.parseAllFrom dataSource
+        reader.readAllFrom dataSource
 
         then: "the first data entry is retrieved"
         1 * dataSource.hasNext() >> true
@@ -67,7 +67,7 @@ class TalkDataReaderSpecTest extends Specification {
         Iterator<String> dataSource = null
 
         when:
-        reader.parseAllFrom dataSource
+        reader.readAllFrom dataSource
 
         then:
         thrown Exception
