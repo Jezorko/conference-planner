@@ -3,10 +3,10 @@ package io
 import core.TalkData
 import spock.lang.Specification
 
-class TalkDataParserSpecTest extends Specification {
+class TalkDataReaderSpecTest extends Specification {
 
     def deserializer = Mock TalkDataFromStringDeserializer
-    def parser = new TalkDataParser(deserializer)
+    def reader = new TalkDataReader(deserializer)
 
     def "should drain the data source and deserialize each line using the deserializer"() {
         given:
@@ -17,7 +17,7 @@ class TalkDataParserSpecTest extends Specification {
         def secondDeserializedEntry = new TalkData("example", 5)
 
         when:
-        def result = parser.parseAllFrom dataSource
+        def result = reader.parseAllFrom dataSource
 
         then: "the first data entry is parsed"
         1 * dataSource.hasNext() >> true
@@ -44,7 +44,7 @@ class TalkDataParserSpecTest extends Specification {
         def deserializerException = new IllegalArgumentException()
 
         when:
-        parser.parseAllFrom dataSource
+        reader.parseAllFrom dataSource
 
         then: "the first data entry is retrieved"
         1 * dataSource.hasNext() >> true
@@ -67,7 +67,7 @@ class TalkDataParserSpecTest extends Specification {
         Iterator<String> dataSource = null
 
         when:
-        parser.parseAllFrom dataSource
+        reader.parseAllFrom dataSource
 
         then:
         thrown Exception

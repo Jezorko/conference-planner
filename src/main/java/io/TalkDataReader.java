@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class TalkDataParser {
+public class TalkDataReader {
 
     private final TalkDataFromStringDeserializer deserializer;
 
