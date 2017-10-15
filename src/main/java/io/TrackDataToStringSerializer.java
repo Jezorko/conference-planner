@@ -19,23 +19,34 @@ public class TrackDataToStringSerializer {
 
     private LocalTime currentTimestamp;
 
+    /**
+     * This method modifies one of the classes' fields,
+     * therefore it is not thread-safe. Use with caution.
+     */
+    // TODO: refactoring to make this method thread-safe
     public String serialize(TrackData trackData, int index) {
         StringBuilder result = new StringBuilder("Track " + index + LINE_SEPARATOR);
 
         currentTimestamp = MORNING_SESSION_TIMESTAMP;
         result.append(serializeSessionData(trackData.getMorningSessionTalks()));
 
-        result.append(formatTimestamp(LUNCH_TIMESTAMP))
-              .append("Lunch")
-              .append(LINE_SEPARATOR);
+        result.append(serializeLunchData());
 
         currentTimestamp = AFTERNOON_SESSION_TIMESTAMP;
         result.append(serializeSessionData(trackData.getAfternoonSessionTalks()));
 
-        result.append(getFormattedCurrentTimestamp())
-              .append("Networking Event");
+        result.append(serializeNetworkingEventData());
 
         return result.toString();
+    }
+
+    private StringBuilder serializeLunchData() {
+        return new StringBuilder(formatTimestamp(LUNCH_TIMESTAMP)).append("Lunch")
+                                                                  .append(LINE_SEPARATOR);
+    }
+
+    private StringBuilder serializeNetworkingEventData() {
+        return new StringBuilder(getFormattedCurrentTimestamp()).append("Networking Event");
     }
 
     private StringBuilder serializeSessionData(List<TalkData> sessionData) {
