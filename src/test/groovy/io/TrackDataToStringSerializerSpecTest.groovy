@@ -65,7 +65,6 @@ class TrackDataToStringSerializerSpecTest extends Specification {
                 '03:00PM Ruby on Rails Legacy App Maintenance 60min\n' +
                 '04:00PM Rails for Python Developers lightning\n' +
                 '04:05PM Networking Event'
-        // TODO: Adjustment for specification error, we assume that the Networking Event doesn't have to start at a full hour
     }
 
     def "should throw if input is null"() {
