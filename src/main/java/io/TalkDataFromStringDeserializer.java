@@ -7,7 +7,7 @@ import static io.vavr.control.Option.of;
 import static java.lang.Integer.valueOf;
 import static util.SpecificationConstants.*;
 
-public class TalkDataFromStringDeserializer {
+class TalkDataFromStringDeserializer {
 
     private static final String EMPTY_STRING = "";
 
@@ -15,7 +15,7 @@ public class TalkDataFromStringDeserializer {
 
     private final RegexValidator talkDataValidator = new RegexValidator(TALK_DATA_PATTERN);
 
-    public TalkData deserialize(String line) {
+    TalkData deserialize(String line) {
         return of(line).filter(talkDataValidator::isValid)
                        .map(this::extractFromValidString)
                        .getOrElseThrow(this::dataInvalidException);

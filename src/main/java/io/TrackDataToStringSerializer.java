@@ -12,7 +12,7 @@ import java.util.List;
 import static util.SpecificationConstants.*;
 
 @NoArgsConstructor
-public class TrackDataToStringSerializer {
+class TrackDataToStringSerializer {
 
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 

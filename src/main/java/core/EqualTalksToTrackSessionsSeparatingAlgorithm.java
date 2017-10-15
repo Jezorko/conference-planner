@@ -10,7 +10,7 @@ import static util.SpecificationConstants.AFTERNOON_SESSION_MAX_TIME;
 import static util.SpecificationConstants.MORNING_SESSION_MAX_TIME;
 import static util.TalkUtil.calculateTotalTimeOf;
 
-public class EqualTalksToTrackSessionsSeparatingAlgorithm implements TalksToTrackSessionsSeparatingAlgorithm {
+class EqualTalksToTrackSessionsSeparatingAlgorithm implements TalksToTrackSessionsSeparatingAlgorithm {
     @Override
     public TrackData separateFrom(List<TalkData> talks) {
         List<TalkData> morningTalks = new ArrayList<>();

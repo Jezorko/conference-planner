@@ -5,6 +5,6 @@ import dto.TrackData;
 
 import java.util.List;
 
-public interface TalksToTrackSessionsSeparatingAlgorithm {
+interface TalksToTrackSessionsSeparatingAlgorithm {
     TrackData separateFrom(List<TalkData> talks);
 }

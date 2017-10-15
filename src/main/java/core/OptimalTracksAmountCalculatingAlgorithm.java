@@ -10,7 +10,7 @@ import static util.SpecificationConstants.MAX_TRACK_TIME;
 import static util.SpecificationConstants.MIN_TRACK_TIME;
 import static util.TalkUtil.calculateTotalTimeOf;
 
-public class OptimalTracksAmountCalculatingAlgorithm implements TracksAmountCalculatingAlgorithm {
+class OptimalTracksAmountCalculatingAlgorithm implements TracksAmountCalculatingAlgorithm {
 
     @Override
     public int calculateTracksAmountFor(List<TalkData> talks) {

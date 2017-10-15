@@ -10,11 +10,11 @@ import static io.vavr.Tuple.of;
 import static java.util.stream.IntStream.range;
 
 @RequiredArgsConstructor
-public class TrackDataWriter {
+class TrackDataWriter {
 
     private final TrackDataToStringSerializer serializer;
 
-    public void writeTo(PrintStream printStream, List<TrackData> conferenceData) {
+    void writeTo(PrintStream printStream, List<TrackData> conferenceData) {
         if (printStream == null || conferenceData == null) {
             throw new IllegalArgumentException("Input may not be null");
         }

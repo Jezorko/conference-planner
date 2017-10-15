@@ -4,6 +4,6 @@ import dto.TalkData;
 
 import java.util.List;
 
-public interface TracksAmountCalculatingAlgorithm {
+interface TracksAmountCalculatingAlgorithm {
     int calculateTracksAmountFor(List<TalkData> talks);
 }

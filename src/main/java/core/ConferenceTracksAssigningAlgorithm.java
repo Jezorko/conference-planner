@@ -16,7 +16,7 @@ public class ConferenceTracksAssigningAlgorithm {
     private final DataSegregationAlgorithm dataSegregationAlgorithm;
     private final TalksToTrackSessionsSeparatingAlgorithm talksToTrackSessionsSeparatingAlgorithm;
 
-    List<TrackData> assignToTracks(List<TalkData> talks) {
+    public List<TrackData> assignToTracks(List<TalkData> talks) {
         if (talks == null) {
             throw new IllegalArgumentException("The list of talks cannot be null");
         }
