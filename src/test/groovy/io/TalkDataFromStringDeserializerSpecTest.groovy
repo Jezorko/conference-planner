@@ -1,6 +1,6 @@
 package io
 
-import core.TalkData
+import dto.TalkData
 import spock.lang.Specification
 import spock.lang.Unroll
 

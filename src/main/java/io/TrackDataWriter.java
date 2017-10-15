@@ -1,6 +1,6 @@
 package io;
 
-import core.TrackData;
+import dto.TrackData;
 import lombok.RequiredArgsConstructor;
 
 import java.io.PrintStream;

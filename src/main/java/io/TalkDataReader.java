@@ -1,6 +1,6 @@
 package io;
 
-import core.TalkData;
+import dto.TalkData;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;

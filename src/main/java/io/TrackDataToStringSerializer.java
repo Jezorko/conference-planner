@@ -1,7 +1,7 @@
 package io;
 
-import core.TalkData;
-import core.TrackData;
+import dto.TalkData;
+import dto.TrackData;
 import io.vavr.Tuple2;
 import lombok.NoArgsConstructor;
 

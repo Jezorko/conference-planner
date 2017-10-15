@@ -1,8 +1,8 @@
-package core
+package dto
 
 import spock.lang.Specification
 
-import static core.TalkData.TIME_DESCENDING_COMPARATOR
+import static dto.TalkData.TIME_DESCENDING_COMPARATOR
 import static org.apache.commons.lang3.RandomUtils.nextInt
 
 class TalkDataSpecTest extends Specification {

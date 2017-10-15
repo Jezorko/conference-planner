@@ -1,12 +1,13 @@
 package core;
 
-import org.apache.commons.collections.ListUtils;
+import dto.TalkData;
+import dto.TrackData;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.TalkData.TIME_DESCENDING_COMPARATOR;
+import static dto.TalkData.TIME_DESCENDING_COMPARATOR;
 import static java.math.BigDecimal.ROUND_HALF_UP;
 import static java.math.BigDecimal.valueOf;
 import static java.util.stream.Collectors.toList;

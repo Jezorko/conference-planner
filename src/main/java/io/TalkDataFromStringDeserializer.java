@@ -1,6 +1,6 @@
 package io;
 
-import core.TalkData;
+import dto.TalkData;
 import org.apache.commons.validator.routines.RegexValidator;
 
 import static io.vavr.control.Option.of;

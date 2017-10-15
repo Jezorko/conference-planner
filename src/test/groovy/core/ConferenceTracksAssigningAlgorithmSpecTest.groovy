@@ -1,5 +1,6 @@
 package core
 
+import dto.TalkData
 import spock.lang.Specification
 
 import static java.lang.Integer.MAX_VALUE

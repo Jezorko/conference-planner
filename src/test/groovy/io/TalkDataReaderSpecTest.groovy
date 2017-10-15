@@ -1,6 +1,6 @@
 package io
 
-import core.TalkData
+import dto.TalkData
 import spock.lang.Specification
 
 class TalkDataReaderSpecTest extends Specification {

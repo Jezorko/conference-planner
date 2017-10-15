@@ -1,7 +1,7 @@
 package io
 
-import core.TalkData
-import core.TrackData
+import dto.TalkData
+import dto.TrackData
 import spock.lang.Specification
 import spock.lang.Unroll
 
