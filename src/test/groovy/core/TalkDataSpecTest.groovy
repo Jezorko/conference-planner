@@ -2,7 +2,7 @@ package core
 
 import spock.lang.Specification
 
-import static java.util.Arrays.sort
+import static core.TalkData.TIME_DESCENDING_COMPARATOR
 import static org.apache.commons.lang3.RandomUtils.nextInt
 
 class TalkDataSpecTest extends Specification {
@@ -11,17 +11,17 @@ class TalkDataSpecTest extends Specification {
         def dataSize = 10
 
         and: "a couple objects in an array"
-        def talkDataArray = new TalkData[dataSize]
+        def talksData = new TalkData[dataSize]
         (0..dataSize - 1).each {
-            talkDataArray[it] = new TalkData("example", nextInt(5, 60))
+            talksData[it] = new TalkData("example", nextInt(5, 60))
         }
 
         when: "array is sorted"
-        sort(talkDataArray)
+        talksData.sort(TIME_DESCENDING_COMPARATOR)
 
         then: "each talks' length should be greater than or equal to the consequent length"
         (1..dataSize - 1).each {
-            assert talkDataArray[it - 1].lengthInMinutes >= talkDataArray[it].lengthInMinutes
+            assert talksData[it - 1].lengthInMinutes >= talksData[it].lengthInMinutes
         }
     }
 }
