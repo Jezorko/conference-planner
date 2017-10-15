@@ -9,14 +9,13 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static util.SpecificationConstants.AFTERNOON_SESSION_MAX_TIME;
+import static util.SpecificationConstants.MORNING_SESSION_MAX_TIME;
 import static util.TalkUtil.TIME_DESCENDING_COMPARATOR;
 import static util.TalkUtil.calculateTotalTimeOf;
 
 @RequiredArgsConstructor
 public class ConferenceTracksAssigningAlgorithm {
-
-    private static final int MORNING_SESSION_MAX_TIME = 3 * 60;
-    private static final int AFTERNOON_SESSION_MAX_TIME = 4 * 60;
 
     private final TracksAmountCalculatingAlgorithm tracksAmountCalculatingAlgorithm;
 

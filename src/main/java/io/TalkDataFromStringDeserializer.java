@@ -5,13 +5,10 @@ import org.apache.commons.validator.routines.RegexValidator;
 
 import static io.vavr.control.Option.of;
 import static java.lang.Integer.valueOf;
+import static util.SpecificationConstants.*;
 
 public class TalkDataFromStringDeserializer {
 
-    private static final String TALK_DATA_TITLE_PATTERN = "\\D+";
-    private static final String QUICK_TALK_TIME_PATTERN = "lightning";
-    private static final String TALK_DATA_TIME_PATTERN = " ((\\d+min)|(" + QUICK_TALK_TIME_PATTERN + "))";
-    private static final String TALK_DATA_PATTERN = "^" + TALK_DATA_TITLE_PATTERN + TALK_DATA_TIME_PATTERN + "$";
     private static final String EMPTY_STRING = "";
 
     private static final int QUICK_TALK_TIME = 5;
