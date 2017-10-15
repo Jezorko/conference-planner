@@ -2,49 +2,59 @@ package io;
 
 import core.TalkData;
 import core.TrackData;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+@NoArgsConstructor
 public class TrackDataToStringSerializer {
+
+    private final static String LINE_SEPARATOR = System.getProperty("line.separator");
+    private final static String TIMESTAMP_FORMAT = "hh:mma ";
+    private final static LocalTime LUNCH_TIMESTAMP = LocalTime.of(12, 0);
+    private final static LocalTime MORNING_SESSION_TIMESTAMP = LocalTime.of(9, 0);
+    private final static LocalTime AFTERNOON_SESSION_TIMESTAMP = LocalTime.of(13, 0);
+
+    private LocalTime currentTimestamp;
+
     public String serialize(TrackData trackData, int index) {
-        StringBuilder result = new StringBuilder("Track " + index + "\n");
-        LocalTime currentTime = getMorningSessionStartTime();
-        for (TalkData talkData : trackData.getMorningSessionTalks()) {
-            result.append(currentTime.format(DateTimeFormatter.ofPattern("hh:mma ")))
-                  .append(talkData.getName())
-                  .append(' ')
-                  .append(formatTalkTime(talkData))
-                  .append('\n');
+        currentTimestamp = MORNING_SESSION_TIMESTAMP;
+        StringBuilder result = new StringBuilder("Track " + index + LINE_SEPARATOR);
+        appendSessionData(trackData.getMorningSessionTalks(), result);
 
-            currentTime = currentTime.plusMinutes(talkData.getLengthInMinutes());
-        }
+        result.append(formatTimestamp(LUNCH_TIMESTAMP))
+              .append("Lunch")
+              .append(LINE_SEPARATOR);
 
-        result.append("12:00PM Lunch\n");
+        currentTimestamp = AFTERNOON_SESSION_TIMESTAMP;
+        appendSessionData(trackData.getAfternoonSessionTalks(), result);
 
-        currentTime = getAfternoonSessionStartTime();
-        for (TalkData talkData : trackData.getAfternoonSessionTalks()) {
-            result.append(currentTime.format(DateTimeFormatter.ofPattern("hh:mma ")))
-                  .append(talkData.getName())
-                  .append(' ')
-                  .append(formatTalkTime(talkData))
-                  .append('\n');
-
-            currentTime = currentTime.plusMinutes(talkData.getLengthInMinutes());
-        }
-
-        result.append(currentTime.format(DateTimeFormatter.ofPattern("hh:mma ")))
+        result.append(getFormattedCurrentTimestamp())
               .append("Networking Event");
 
         return result.toString();
     }
 
-    private LocalTime getMorningSessionStartTime() {
-        return LocalTime.of(9, 0);
+    private void appendSessionData(List<TalkData> sessionData, StringBuilder result) {
+        for (TalkData talkData : sessionData) {
+            result.append(getFormattedCurrentTimestamp())
+                  .append(talkData.getName())
+                  .append(' ')
+                  .append(formatTalkTime(talkData))
+                  .append(LINE_SEPARATOR);
+
+            currentTimestamp = currentTimestamp.plusMinutes(talkData.getLengthInMinutes());
+        }
     }
 
-    private LocalTime getAfternoonSessionStartTime() {
-        return LocalTime.of(13, 0);
+    private String getFormattedCurrentTimestamp() {
+        return formatTimestamp(currentTimestamp);
+    }
+
+    private String formatTimestamp(LocalTime timestamp) {
+        return timestamp.format(DateTimeFormatter.ofPattern(TIMESTAMP_FORMAT));
     }
 
     private String formatTalkTime(TalkData talkData) {
