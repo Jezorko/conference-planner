@@ -1,6 +1,8 @@
 package io
 
+import core.TalkData
 import core.TrackData
+import io.vavr.Tuple2
 import spock.lang.Specification
 
 class TrackDataWriterSpecTest extends Specification {
@@ -13,19 +15,19 @@ class TrackDataWriterSpecTest extends Specification {
         def outputStream = Mock PrintStream
 
         and:
-        def firstTrackData = new TrackData(null, null)
-        def secondTrackData = new TrackData(null, null)
+        def firstTrackData = new TrackData([new TalkData("first", 0)], null)
+        def secondTrackData = new TrackData([new TalkData("second", 0)], null)
         def input = [firstTrackData, secondTrackData]
 
         when:
         writer.writeTo(outputStream, input)
 
         then: "first track data should be serialized and printed"
-        1 * serializer.serialize(firstTrackData, 1) >> "serializedFirst"
+        1 * serializer.serialize({ it._1 == firstTrackData && it._2 == 1 } as Tuple2) >> "serializedFirst"
         1 * outputStream.println("serializedFirst")
 
         and: "second track data should be serialized and printed"
-        1 * serializer.serialize(secondTrackData, 2) >> "serializedSecond"
+        1 * serializer.serialize({ it._1 == secondTrackData && it._2 == 2 } as Tuple2) >> "serializedSecond"
         1 * outputStream.println("serializedSecond")
     }
 
@@ -44,7 +46,7 @@ class TrackDataWriterSpecTest extends Specification {
         writer.writeTo(outputStream, input)
 
         then: "first track data should be serialized"
-        1 * serializer.serialize(trackData, 1) >> { throw serializerException }
+        1 * serializer.serialize({ it._1 == trackData && it._2 == 1 } as Tuple2) >> { throw serializerException }
 
         and: "no other action should be performed"
         0 * _._

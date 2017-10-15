@@ -19,7 +19,7 @@ public class TrackDataWriter {
             throw new IllegalArgumentException("Input may not be null");
         }
         range(0, conferenceData.size()).mapToObj(index -> of(conferenceData.get(index), index + 1))
-                                       .map(data -> serializer.serialize(data._1(), data._2()))
+                                       .map(serializer::serialize)
                                        .forEach(printStream::println);
     }
 }

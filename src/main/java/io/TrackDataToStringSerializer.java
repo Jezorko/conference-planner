@@ -2,6 +2,7 @@ package io;
 
 import core.TalkData;
 import core.TrackData;
+import io.vavr.Tuple2;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
@@ -19,12 +20,16 @@ public class TrackDataToStringSerializer {
 
     private LocalTime currentTimestamp;
 
+    String serialize(Tuple2<TrackData, Integer> trackDataWithIndex) {
+        return serialize(trackDataWithIndex._1, trackDataWithIndex._2);
+    }
+
     /**
      * This method modifies one of the classes' fields,
      * therefore it is not thread-safe. Use with caution.
      */
     // TODO: refactoring to make this method thread-safe
-    public String serialize(TrackData trackData, int index) {
+    String serialize(TrackData trackData, int index) {
         StringBuilder result = new StringBuilder("Track " + index + LINE_SEPARATOR);
 
         currentTimestamp = MORNING_SESSION_TIMESTAMP;
