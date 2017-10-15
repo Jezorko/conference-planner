@@ -9,7 +9,8 @@ import static java.lang.Integer.MAX_VALUE
 class ConferenceTracksAssigningAlgorithmSpecTest extends Specification {
 
     def tracksAmountCalculatingAlgorithm = Mock TracksAmountCalculatingAlgorithm
-    def algorithm = new ConferenceTracksAssigningAlgorithm(tracksAmountCalculatingAlgorithm)
+    def dataSegregationAlgorithm = new EqualDataSegregationAlgorithm()
+    def algorithm = new ConferenceTracksAssigningAlgorithm(tracksAmountCalculatingAlgorithm, dataSegregationAlgorithm)
 
     def "should generate optimal solution"() {
         given:

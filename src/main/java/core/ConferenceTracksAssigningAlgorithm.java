@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.range;
 import static util.SpecificationConstants.AFTERNOON_SESSION_MAX_TIME;
 import static util.SpecificationConstants.MORNING_SESSION_MAX_TIME;
 import static util.TalkUtil.TIME_DESCENDING_COMPARATOR;
@@ -18,6 +17,7 @@ import static util.TalkUtil.calculateTotalTimeOf;
 public class ConferenceTracksAssigningAlgorithm {
 
     private final TracksAmountCalculatingAlgorithm tracksAmountCalculatingAlgorithm;
+    private final DataSegregationAlgorithm dataSegregationAlgorithm;
 
     List<TrackData> assignToTracks(List<TalkData> talks) {
         if (talks == null) {
@@ -28,18 +28,7 @@ public class ConferenceTracksAssigningAlgorithm {
 
         int optimalTracksAmount = tracksAmountCalculatingAlgorithm.calculateTracksAmountFor(talks);
 
-        List<List<TalkData>> tracksTalks = new ArrayList<>();
-        range(0, optimalTracksAmount).forEach(i -> tracksTalks.add(new ArrayList<>()));
-
-        int j = 0;
-        for (TalkData talk1 : talks) {
-            tracksTalks.get(j)
-                       .add(talk1);
-            ++j;
-            if (j == optimalTracksAmount) {
-                j = 0;
-            }
-        }
+        List<List<TalkData>> tracksTalks = dataSegregationAlgorithm.segregateBetween(optimalTracksAmount, talks);
 
         return tracksTalks.stream()
                           .map(talksForTrack -> {
