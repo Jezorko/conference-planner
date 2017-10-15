@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dto.TalkData.TIME_DESCENDING_COMPARATOR;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static util.TalkUtil.TIME_DESCENDING_COMPARATOR;
 import static util.TalkUtil.calculateTotalTimeOf;
 
 @RequiredArgsConstructor
