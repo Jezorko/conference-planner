@@ -10,7 +10,10 @@ class ConferenceTracksAssigningAlgorithmSpecTest extends Specification {
 
     def tracksAmountCalculatingAlgorithm = Mock TracksAmountCalculatingAlgorithm
     def dataSegregationAlgorithm = new EqualDataSegregationAlgorithm()
-    def algorithm = new ConferenceTracksAssigningAlgorithm(tracksAmountCalculatingAlgorithm, dataSegregationAlgorithm)
+    def talksToTrackSessionsSeparatingAlgorithm = new EqualTalksToTrackSessionsSeparatingAlgorithm()
+    def algorithm = new ConferenceTracksAssigningAlgorithm(tracksAmountCalculatingAlgorithm,
+                                                           dataSegregationAlgorithm,
+                                                           talksToTrackSessionsSeparatingAlgorithm)
 
     def "should generate optimal solution"() {
         given:
