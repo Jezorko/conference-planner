@@ -2,21 +2,23 @@ package core;
 
 import dto.TalkData;
 import dto.TrackData;
+import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static dto.TalkData.TIME_DESCENDING_COMPARATOR;
-import static java.math.BigDecimal.ROUND_HALF_UP;
-import static java.math.BigDecimal.valueOf;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static util.TalkUtil.calculateTotalTimeOf;
 
+@RequiredArgsConstructor
 public class ConferenceTracksAssigningAlgorithm {
 
-    private static final BigDecimal MIN_TRACK_TIME = valueOf(6 * 60);
-    private static final BigDecimal MAX_TRACK_TIME = valueOf(7 * 60);
+    private static final int MORNING_SESSION_MAX_TIME = 3 * 60;
+    private static final int AFTERNOON_SESSION_MAX_TIME = 4 * 60;
+
+    private final TracksAmountCalculatingAlgorithm tracksAmountCalculatingAlgorithm;
 
     List<TrackData> assignToTracks(List<TalkData> talks) {
         if (talks == null) {
@@ -25,7 +27,7 @@ public class ConferenceTracksAssigningAlgorithm {
 
         talks.sort(TIME_DESCENDING_COMPARATOR);
 
-        int optimalTracksAmount = calculateOptimalTracksAmountFor(talks);
+        int optimalTracksAmount = tracksAmountCalculatingAlgorithm.calculateTracksAmountFor(talks);
 
         List<List<TalkData>> tracksTalks = new ArrayList<>();
         range(0, optimalTracksAmount).forEach(i -> tracksTalks.add(new ArrayList<>()));
@@ -42,16 +44,14 @@ public class ConferenceTracksAssigningAlgorithm {
 
         return tracksTalks.stream()
                           .map(talksForTrack -> {
-                              int morningTalksMaxTime = 3 * 60;
-                              int afternoonTalksMaxTime = 4 * 60;
                               List<TalkData> morningTalks = new ArrayList<>();
                               List<TalkData> afternoonTalks = new ArrayList<>();
 
                               talksForTrack.forEach(talk -> {
-                                  if (calculateTotalTimeOf(morningTalks) + talk.getLengthInMinutes() <= morningTalksMaxTime) {
+                                  if (calculateTotalTimeOf(morningTalks) + talk.getLengthInMinutes() <= MORNING_SESSION_MAX_TIME) {
                                       morningTalks.add(talk);
                                   }
-                                  else if (calculateTotalTimeOf(afternoonTalks) + talk.getLengthInMinutes() <= afternoonTalksMaxTime) {
+                                  else if (calculateTotalTimeOf(afternoonTalks) + talk.getLengthInMinutes() <= AFTERNOON_SESSION_MAX_TIME) {
                                       afternoonTalks.add(talk);
                                   }
                                   else {
@@ -62,21 +62,6 @@ public class ConferenceTracksAssigningAlgorithm {
                               return new TrackData(morningTalks, afternoonTalks);
                           })
                           .collect(toList());
-    }
-
-    private int calculateOptimalTracksAmountFor(List<TalkData> talks) {
-        int totalTime = calculateTotalTimeOf(talks);
-        return new BigDecimal(totalTime).divide(MIN_TRACK_TIME, ROUND_HALF_UP)
-                                        .add(new BigDecimal(totalTime).divide(MAX_TRACK_TIME, ROUND_HALF_UP))
-                                        .divide(new BigDecimal(2), ROUND_HALF_UP)
-                                        .intValueExact();
-    }
-
-    private int calculateTotalTimeOf(List<TalkData> talks) {
-        return talks.stream()
-                    .map(TalkData::getLengthInMinutes)
-                    .reduce(Integer::sum)
-                    .orElse(0);
     }
 
     private static class AlgorithmFailureException extends RuntimeException {
