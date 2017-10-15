@@ -2,6 +2,8 @@ package core
 
 import spock.lang.Specification
 
+import static java.lang.Integer.MAX_VALUE
+
 class ConferenceTracksAssigningAlgorithmSpecTest extends Specification {
 
     static SPECIFICATION_TALKS = [
@@ -42,10 +44,10 @@ class ConferenceTracksAssigningAlgorithmSpecTest extends Specification {
         and: "each track has valid session times"
         tracks.forEach {
             assert SPECIFICATION_TALKS.containsAll(it.morningSessionTalks)
-            assert it.morningSessionTalks.stream().map({ it.lengthInMinutes }).reduce(Integer.&sum) <= morningSessionMaximumTimeInMinutes
+            assert it.morningSessionTalks.stream().map({ it.lengthInMinutes }).reduce(Integer.&sum).orElse(MAX_VALUE) <= morningSessionMaximumTimeInMinutes
 
             assert SPECIFICATION_TALKS.containsAll(it.afternoonSessionTalks)
-            assert it.afternoonSessionTalks.stream().map({ it.lengthInMinutes }).reduce(Integer.&sum) <= afternoonSessionMaximumTimeInMinutes
+            assert it.afternoonSessionTalks.stream().map({ it.lengthInMinutes }).reduce(Integer.&sum).orElse(MAX_VALUE) <= afternoonSessionMaximumTimeInMinutes
         }
 
         and: "there are no talks lost in the process"
