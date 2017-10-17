@@ -24,4 +24,5 @@ public class SpecificationConstants {
     public final static LocalTime LUNCH_TIMESTAMP = LocalTime.of(12, 0);
     public final static LocalTime MORNING_SESSION_TIMESTAMP = LocalTime.of(9, 0);
     public final static LocalTime AFTERNOON_SESSION_TIMESTAMP = LocalTime.of(13, 0);
+    public final static LocalTime NETWORKING_EVENT_TIMESTAMP = LocalTime.of(16, 0);
 }

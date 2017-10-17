@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static io.vavr.control.Option.of;
 import static util.SpecificationConstants.*;
 
 @NoArgsConstructor
@@ -49,7 +50,12 @@ class TrackDataToStringSerializer {
     }
 
     private StringBuilder serializeNetworkingEventData() {
-        return new StringBuilder(getFormattedCurrentTimestamp()).append("Networking Event");
+        return of(currentTimestamp).filter(NETWORKING_EVENT_TIMESTAMP::isBefore)
+                                   .orElse(of(NETWORKING_EVENT_TIMESTAMP))
+                                   .map(TrackDataToStringSerializer::formatTimestamp)
+                                   .map(StringBuilder::new)
+                                   .getOrElseThrow(RuntimeException::new)
+                                   .append("Networking Event");
     }
 
     private StringBuilder serializeSessionData(List<TalkData> sessionData) {
