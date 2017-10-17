@@ -70,6 +70,33 @@ class TrackDataToStringSerializerSpecTest extends Specification {
                 '04:05PM Networking Event'
     }
 
+    def "should put networking event at 4PM even if afternoon talks finish earlier"() {
+        when:
+        def output = serializer.serialize(input, trackIndex)
+
+        then:
+        expectedOutput == output
+
+        where:
+        input                                                   | trackIndex || expectedOutput
+        new TrackData([new TalkData("Writing Fast Tests Against Enterprise Rails", 60),
+                       new TalkData("Overdoing it in Python", 45),
+                       new TalkData("Lua for the Masses", 30),
+                       new TalkData("Ruby Errors from Mismatched Gem Versions", 45)],
+                      [new TalkData("Ruby on Rails: Why We Should Move On", 60),
+                       new TalkData("Common Ruby Errors", 45)]) |
+                1                                                            ||
+                'Track 1' + LINE_SEPARATOR +
+                '09:00AM Writing Fast Tests Against Enterprise Rails 60min' + LINE_SEPARATOR +
+                '10:00AM Overdoing it in Python 45min' + LINE_SEPARATOR +
+                '10:45AM Lua for the Masses 30min' + LINE_SEPARATOR +
+                '11:15AM Ruby Errors from Mismatched Gem Versions 45min' + LINE_SEPARATOR +
+                '12:00PM Lunch' + LINE_SEPARATOR +
+                '01:00PM Ruby on Rails: Why We Should Move On 60min' + LINE_SEPARATOR +
+                '02:00PM Common Ruby Errors 45min' + LINE_SEPARATOR +
+                '04:00PM Networking Event'
+    }
+
     def "should throw if input is null"() {
         given:
         TrackData input = null
