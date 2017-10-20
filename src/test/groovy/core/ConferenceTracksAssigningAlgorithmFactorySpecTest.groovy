@@ -1,6 +1,6 @@
 package core
 
-import dto.TalkData
+import dto.Talk
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -47,7 +47,7 @@ class ConferenceTracksAssigningAlgorithmFactorySpecTest extends Specification {
     def generateTalks(int amount) {
         def talks = []
         (0..amount).each {
-            talks.add(new TalkData(randomAlphabetic(10), nextInt(5, 60)))
+            talks.add(new Talk(randomAlphabetic(10), nextInt(5, 60)))
         }
         return talks
     }

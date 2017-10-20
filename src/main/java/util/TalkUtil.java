@@ -1,19 +1,19 @@
 package util;
 
-import dto.TalkData;
+import dto.Talk;
 
 import java.util.Comparator;
 import java.util.List;
 
-import static java.lang.Integer.valueOf;
+import static java.lang.Integer.compare;
 
 public class TalkUtil {
 
-    public final static Comparator<TalkData> TIME_DESCENDING_COMPARATOR = (a, b) -> valueOf(b.getLengthInMinutes()).compareTo(a.getLengthInMinutes());
+    public final static Comparator<Talk> TIME_DESCENDING_COMPARATOR = (a, b) -> compare(b.getLengthInMinutes(), a.getLengthInMinutes());
 
-    public static int calculateTotalTimeOf(List<TalkData> talks) {
+    public static int calculateTotalTimeOf(List<Talk> talks) {
         return talks.stream()
-                    .map(TalkData::getLengthInMinutes)
+                    .map(Talk::getLengthInMinutes)
                     .reduce(Integer::sum)
                     .orElse(0);
     }

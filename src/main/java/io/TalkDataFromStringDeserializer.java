@@ -1,6 +1,6 @@
 package io;
 
-import dto.TalkData;
+import dto.Talk;
 import org.apache.commons.validator.routines.RegexValidator;
 
 import static io.vavr.control.Option.of;
@@ -15,14 +15,14 @@ class TalkDataFromStringDeserializer {
 
     private final RegexValidator talkDataValidator = new RegexValidator(TALK_DATA_PATTERN);
 
-    TalkData deserialize(String line) {
+    Talk deserialize(String line) {
         return of(line).filter(talkDataValidator::isValid)
                        .map(this::extractFromValidString)
                        .getOrElseThrow(this::dataInvalidException);
     }
 
-    private TalkData extractFromValidString(String line) {
-        return new TalkData(extractTitleFrom(line), extractTimeFrom(line));
+    private Talk extractFromValidString(String line) {
+        return new Talk(extractTitleFrom(line), extractTimeFrom(line));
     }
 
     private String extractTitleFrom(String line) {

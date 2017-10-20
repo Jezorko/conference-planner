@@ -1,13 +1,13 @@
 package io
 
-import dto.TalkData
-import dto.TrackData
+import dto.Talk
+import dto.Track
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import static System.getProperty
 
-class TrackDataToStringSerializerSpecTest extends Specification {
+class TrackToStringSerializerSpecTest extends Specification {
 
     static LINE_SEPARATOR = getProperty("line.separator")
     def serializer = new TrackDataToStringSerializer()
@@ -20,17 +20,17 @@ class TrackDataToStringSerializerSpecTest extends Specification {
         expectedOutput == output
 
         where:
-        input                                                                 | trackIndex || expectedOutput
-        new TrackData([new TalkData("Writing Fast Tests Against Enterprise Rails", 60),
-                       new TalkData("Overdoing it in Python", 45),
-                       new TalkData("Lua for the Masses", 30),
-                       new TalkData("Ruby Errors from Mismatched Gem Versions", 45)],
-                      [new TalkData("Ruby on Rails: Why We Should Move On", 60),
-                       new TalkData("Common Ruby Errors", 45),
-                       new TalkData("Pair Programming vs Noise", 45),
-                       new TalkData("Programming in the Boondocks of Seattle", 30),
-                       new TalkData("Ruby vs. Clojure for Back-End Development", 30),
-                       new TalkData("User Interface CSS in Rails Apps", 30)]) |
+        input                                                             | trackIndex || expectedOutput
+        new Track([new Talk("Writing Fast Tests Against Enterprise Rails", 60),
+                   new Talk("Overdoing it in Python", 45),
+                   new Talk("Lua for the Masses", 30),
+                   new Talk("Ruby Errors from Mismatched Gem Versions", 45)],
+                  [new Talk("Ruby on Rails: Why We Should Move On", 60),
+                       new Talk("Common Ruby Errors", 45),
+                       new Talk("Pair Programming vs Noise", 45),
+                       new Talk("Programming in the Boondocks of Seattle", 30),
+                       new Talk("Ruby vs. Clojure for Back-End Development", 30),
+                       new Talk("User Interface CSS in Rails Apps", 30)]) |
                 1                                                                          ||
                 'Track 1' + LINE_SEPARATOR +
                 '09:00AM Writing Fast Tests Against Enterprise Rails 60min' + LINE_SEPARATOR +
@@ -46,15 +46,15 @@ class TrackDataToStringSerializerSpecTest extends Specification {
                 '04:30PM User Interface CSS in Rails Apps 30min' + LINE_SEPARATOR +
                 '05:00PM Networking Event'
 
-        new TrackData([new TalkData("Communicating Over Distance", 60),
-                       new TalkData("Rails Magic", 60),
-                       new TalkData("Woah", 30),
-                       new TalkData("Sit Down and Write", 30)],
-                      [new TalkData("Accounting-Driven Development", 45),
-                       new TalkData("Clojure Ate Scala (on my project)", 45),
-                       new TalkData("A World Without HackerNews", 30),
-                       new TalkData("Ruby on Rails Legacy App Maintenance", 60),
-                       new TalkData("Rails for Python Developers", 5)])       |
+        new Track([new Talk("Communicating Over Distance", 60),
+                   new Talk("Rails Magic", 60),
+                   new Talk("Woah", 30),
+                   new Talk("Sit Down and Write", 30)],
+                  [new Talk("Accounting-Driven Development", 45),
+                       new Talk("Clojure Ate Scala (on my project)", 45),
+                       new Talk("A World Without HackerNews", 30),
+                       new Talk("Ruby on Rails Legacy App Maintenance", 60),
+                       new Talk("Rails for Python Developers", 5)])       |
                 2                                                                          ||
                 'Track 2' + LINE_SEPARATOR +
                 '09:00AM Communicating Over Distance 60min' + LINE_SEPARATOR +
@@ -78,13 +78,13 @@ class TrackDataToStringSerializerSpecTest extends Specification {
         expectedOutput == output
 
         where:
-        input                                                   | trackIndex || expectedOutput
-        new TrackData([new TalkData("Writing Fast Tests Against Enterprise Rails", 60),
-                       new TalkData("Overdoing it in Python", 45),
-                       new TalkData("Lua for the Masses", 30),
-                       new TalkData("Ruby Errors from Mismatched Gem Versions", 45)],
-                      [new TalkData("Ruby on Rails: Why We Should Move On", 60),
-                       new TalkData("Common Ruby Errors", 45)]) |
+        input                                               | trackIndex || expectedOutput
+        new Track([new Talk("Writing Fast Tests Against Enterprise Rails", 60),
+                   new Talk("Overdoing it in Python", 45),
+                   new Talk("Lua for the Masses", 30),
+                   new Talk("Ruby Errors from Mismatched Gem Versions", 45)],
+                  [new Talk("Ruby on Rails: Why We Should Move On", 60),
+                       new Talk("Common Ruby Errors", 45)]) |
                 1                                                            ||
                 'Track 1' + LINE_SEPARATOR +
                 '09:00AM Writing Fast Tests Against Enterprise Rails 60min' + LINE_SEPARATOR +
@@ -99,7 +99,7 @@ class TrackDataToStringSerializerSpecTest extends Specification {
 
     def "should throw if input is null"() {
         given:
-        TrackData input = null
+        Track input = null
 
         when:
         serializer.serialize(input, 1)
@@ -111,7 +111,7 @@ class TrackDataToStringSerializerSpecTest extends Specification {
     @Unroll
     "should throw if #field session talks are null"() {
         given:
-        def input = new TrackData(morningSessionTalks, afternoonSessionTalks)
+        def input = new Track(morningSessionTalks, afternoonSessionTalks)
 
         when:
         serializer.serialize(input, 1)

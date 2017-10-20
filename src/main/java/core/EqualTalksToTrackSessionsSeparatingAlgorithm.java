@@ -1,7 +1,7 @@
 package core;
 
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import static util.TalkUtil.calculateTotalTimeOf;
 
 class EqualTalksToTrackSessionsSeparatingAlgorithm implements TalksToTrackSessionsSeparatingAlgorithm {
     @Override
-    public TrackData separateFrom(List<TalkData> talks) {
-        List<TalkData> morningTalks = new ArrayList<>();
-        List<TalkData> afternoonTalks = new ArrayList<>();
+    public Track separateFrom(List<Talk> talks) {
+        List<Talk> morningTalks = new ArrayList<>();
+        List<Talk> afternoonTalks = new ArrayList<>();
 
         talks.forEach(talk -> {
             if (calculateTotalTimeOf(morningTalks) + talk.getLengthInMinutes() <= MORNING_SESSION_MAX_TIME) {
@@ -28,6 +28,6 @@ class EqualTalksToTrackSessionsSeparatingAlgorithm implements TalksToTrackSessio
             }
         });
 
-        return new TrackData(morningTalks, afternoonTalks);
+        return new Track(morningTalks, afternoonTalks);
     }
 }

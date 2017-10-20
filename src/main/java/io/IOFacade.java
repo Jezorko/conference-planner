@@ -1,7 +1,7 @@
 package io;
 
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
@@ -12,12 +12,12 @@ import static java.nio.charset.Charset.defaultCharset;
 
 public class IOFacade {
     @SneakyThrows
-    public List<TalkData> readAllFromFile(String pathToFile) {
+    public List<Talk> readAllFromFile(String pathToFile) {
         List<String> lines = FileUtils.readLines(new File(pathToFile), defaultCharset());
         return new TalkDataReader(new TalkDataFromStringDeserializer()).readAllFrom(lines.iterator());
     }
 
-    public void writeToConsole(List<TrackData> conferenceData) {
+    public void writeToConsole(List<Track> conferenceData) {
         new TrackDataWriter(new TrackDataToStringSerializer()).writeTo(System.out, conferenceData);
     }
 }

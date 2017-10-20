@@ -1,6 +1,6 @@
 package core
 
-import dto.TalkData
+import dto.Talk
 import spock.lang.Specification
 
 import static data.SpecificationDatasets.SPECIFICATION_TALKS
@@ -49,7 +49,7 @@ class ConferenceTracksAssigningAlgorithmSpecTest extends Specification {
 
     def "should throw if the input is null"() {
         given:
-        List<TalkData> talks = null
+        List<Talk> talks = null
 
         when:
         algorithm.assignToTracks talks

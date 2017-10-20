@@ -1,9 +1,9 @@
 package core;
 
-import dto.TalkData;
+import dto.Talk;
 
 import java.util.List;
 
 interface TracksAmountCalculatingAlgorithm {
-    int calculateTracksAmountFor(List<TalkData> talks);
+    int calculateTracksAmountFor(List<Talk> talks);
 }

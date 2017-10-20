@@ -1,10 +1,10 @@
 package io
 
-import dto.TalkData
+import dto.Talk
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class TalkDataFromStringDeserializerSpecTest extends Specification {
+class TalkFromStringDeserializerSpecTest extends Specification {
 
     def deserializer = new TalkDataFromStringDeserializer()
 
@@ -21,10 +21,10 @@ class TalkDataFromStringDeserializerSpecTest extends Specification {
 
         where:
         input                              || expectedResult
-        "example 60min"                    || new TalkData("example", 60)
-        "example lightning"                || new TalkData("example", 5)
-        "example multiple words 10min"     || new TalkData("example multiple words", 10)
-        "example multiple words lightning" || new TalkData("example multiple words", 5)
+        "example 60min"                    || new Talk("example", 60)
+        "example lightning"                || new Talk("example", 5)
+        "example multiple words 10min"     || new Talk("example multiple words", 10)
+        "example multiple words lightning" || new Talk("example multiple words", 5)
     }
 
     def "should throw if string provided for deserialization is null"() {

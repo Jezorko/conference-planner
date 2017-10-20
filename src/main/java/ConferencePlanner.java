@@ -1,7 +1,7 @@
 import core.AlgorithmFailureException;
 import core.ConferenceTracksAssigningAlgorithmFactory;
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 import io.IOFacade;
 import lombok.extern.apachecommons.CommonsLog;
 import lombok.val;
@@ -17,9 +17,9 @@ public class ConferencePlanner {
 
         IOFacade ioFacade = new IOFacade();
 
-        List<TalkData> talks = ioFacade.readAllFromFile(args[0]);
+        List<Talk> talks = ioFacade.readAllFromFile(args[0]);
 
-        List<TrackData> tracks;
+        List<Track> tracks;
 
         val algorithmFactory = new ConferenceTracksAssigningAlgorithmFactory();
 

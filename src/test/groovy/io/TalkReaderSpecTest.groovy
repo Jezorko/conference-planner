@@ -1,9 +1,9 @@
 package io
 
-import dto.TalkData
+import dto.Talk
 import spock.lang.Specification
 
-class TalkDataReaderSpecTest extends Specification {
+class TalkReaderSpecTest extends Specification {
 
     def deserializer = Mock TalkDataFromStringDeserializer
     def reader = new TalkDataReader(deserializer)
@@ -12,9 +12,9 @@ class TalkDataReaderSpecTest extends Specification {
         given:
         def dataSource = Mock Iterator
         def firstDataEntry = "example 10min"
-        def firstDeserializedEntry = new TalkData("example", 10)
+        def firstDeserializedEntry = new Talk("example", 10)
         def secondDataEntry = "example lightning"
-        def secondDeserializedEntry = new TalkData("example", 5)
+        def secondDeserializedEntry = new Talk("example", 5)
 
         when:
         def result = reader.readAllFrom dataSource

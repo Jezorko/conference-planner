@@ -1,6 +1,6 @@
 package util
 
-import dto.TalkData
+import dto.Talk
 import spock.lang.Specification
 
 import static org.apache.commons.lang3.RandomUtils.nextInt
@@ -14,9 +14,9 @@ class TalkUtilSpecTest extends Specification {
         def dataSize = 10
 
         and: "a couple objects in an array"
-        def talksData = new TalkData[dataSize]
+        def talksData = new Talk[dataSize]
         (0..dataSize - 1).each {
-            talksData[it] = new TalkData("example", nextInt(5, 60))
+            talksData[it] = new Talk("example", nextInt(5, 60))
         }
 
         when: "array is sorted"
@@ -31,8 +31,8 @@ class TalkUtilSpecTest extends Specification {
     def "should calculate the total time of talks"() {
         given:
         def talks = [
-                new TalkData("example", 5),
-                new TalkData("example", 10)
+                new Talk("example", 5),
+                new Talk("example", 10)
         ]
 
         when:
@@ -44,7 +44,7 @@ class TalkUtilSpecTest extends Specification {
 
     def "should return 0 if the list of talks is empty"() {
         given:
-        List<TalkData> talks = []
+        List<Talk> talks = []
 
         when:
         def result = calculateTotalTimeOf talks
@@ -55,7 +55,7 @@ class TalkUtilSpecTest extends Specification {
 
     def "should throw if the list contains a null object"() {
         given:
-        List<TalkData> talks = [null as TalkData]
+        List<Talk> talks = [null as Talk]
 
         when:
         calculateTotalTimeOf talks

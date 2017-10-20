@@ -1,7 +1,7 @@
 package core;
 
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class ConferenceTracksAssigningAlgorithm {
     private final DataSegregationAlgorithm dataSegregationAlgorithm;
     private final TalksToTrackSessionsSeparatingAlgorithm talksToTrackSessionsSeparatingAlgorithm;
 
-    public List<TrackData> assignToTracks(List<TalkData> talks) {
+    public List<Track> assignToTracks(List<Talk> talks) {
         if (talks == null) {
             throw new IllegalArgumentException("The list of talks cannot be null");
         }
@@ -25,7 +25,7 @@ public class ConferenceTracksAssigningAlgorithm {
 
         int optimalTracksAmount = tracksAmountCalculatingAlgorithm.calculateTracksAmountFor(talks);
 
-        List<List<TalkData>> tracksTalks = dataSegregationAlgorithm.segregateBetween(optimalTracksAmount, talks);
+        List<List<Talk>> tracksTalks = dataSegregationAlgorithm.segregateBetween(optimalTracksAmount, talks);
 
         return tracksTalks.stream()
                           .map(talksToTrackSessionsSeparatingAlgorithm::separateFrom)

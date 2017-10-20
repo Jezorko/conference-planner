@@ -1,6 +1,6 @@
 package io;
 
-import dto.TrackData;
+import dto.Track;
 import lombok.RequiredArgsConstructor;
 
 import java.io.PrintStream;
@@ -14,7 +14,7 @@ class TrackDataWriter {
 
     private final TrackDataToStringSerializer serializer;
 
-    void writeTo(PrintStream printStream, List<TrackData> conferenceData) {
+    void writeTo(PrintStream printStream, List<Track> conferenceData) {
         if (printStream == null || conferenceData == null) {
             throw new IllegalArgumentException("Input may not be null");
         }

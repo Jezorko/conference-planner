@@ -1,11 +1,11 @@
 package io
 
-import dto.TalkData
-import dto.TrackData
+import dto.Talk
+import dto.Track
 import io.vavr.Tuple2
 import spock.lang.Specification
 
-class TrackDataWriterSpecTest extends Specification {
+class TrackWriterSpecTest extends Specification {
 
     def serializer = Mock TrackDataToStringSerializer
     def writer = new TrackDataWriter(serializer)
@@ -15,8 +15,8 @@ class TrackDataWriterSpecTest extends Specification {
         def outputStream = Mock PrintStream
 
         and:
-        def firstTrackData = new TrackData([new TalkData("first", 0)], null)
-        def secondTrackData = new TrackData([new TalkData("second", 0)], null)
+        def firstTrackData = new Track([new Talk("first", 0)], null)
+        def secondTrackData = new Track([new Talk("second", 0)], null)
         def input = [firstTrackData, secondTrackData]
 
         when:
@@ -36,7 +36,7 @@ class TrackDataWriterSpecTest extends Specification {
         def outputStream = Mock PrintStream
 
         and:
-        def trackData = new TrackData(null, null)
+        def trackData = new Track(null, null)
         def input = [trackData]
 
         and:

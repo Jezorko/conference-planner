@@ -1,10 +1,10 @@
 package core;
 
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 
 import java.util.List;
 
 interface TalksToTrackSessionsSeparatingAlgorithm {
-    TrackData separateFrom(List<TalkData> talks);
+    Track separateFrom(List<Talk> talks);
 }

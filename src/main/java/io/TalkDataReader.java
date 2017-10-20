@@ -1,6 +1,6 @@
 package io;
 
-import dto.TalkData;
+import dto.Talk;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ class TalkDataReader {
 
     private final TalkDataFromStringDeserializer deserializer;
 
-    List<TalkData> readAllFrom(Iterator<String> dataSource) {
-        final List<TalkData> result = new ArrayList<>();
+    List<Talk> readAllFrom(Iterator<String> dataSource) {
+        final List<Talk> result = new ArrayList<>();
         while (dataSource.hasNext()) {
             result.add(deserializer.deserialize(dataSource.next()));
         }

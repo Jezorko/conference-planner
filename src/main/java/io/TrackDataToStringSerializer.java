@@ -1,7 +1,7 @@
 package io;
 
-import dto.TalkData;
-import dto.TrackData;
+import dto.Talk;
+import dto.Track;
 import io.vavr.Tuple2;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +19,7 @@ class TrackDataToStringSerializer {
 
     private LocalTime currentTimestamp;
 
-    String serialize(Tuple2<TrackData, Integer> trackDataWithIndex) {
+    String serialize(Tuple2<Track, Integer> trackDataWithIndex) {
         return serialize(trackDataWithIndex._1, trackDataWithIndex._2);
     }
 
@@ -28,16 +28,16 @@ class TrackDataToStringSerializer {
      * therefore it is not thread-safe. Use with caution.
      */
     // TODO: refactoring to make this method thread-safe
-    String serialize(TrackData trackData, int index) {
+    String serialize(Track track, int index) {
         StringBuilder result = new StringBuilder("Track " + index + LINE_SEPARATOR);
 
         currentTimestamp = MORNING_SESSION_TIMESTAMP;
-        result.append(serializeSessionData(trackData.getMorningSessionTalks()));
+        result.append(serializeSessionData(track.getMorningSessionTalks()));
 
         result.append(serializeLunchData());
 
         currentTimestamp = AFTERNOON_SESSION_TIMESTAMP;
-        result.append(serializeSessionData(trackData.getAfternoonSessionTalks()));
+        result.append(serializeSessionData(track.getAfternoonSessionTalks()));
 
         result.append(serializeNetworkingEventData());
 
@@ -58,16 +58,16 @@ class TrackDataToStringSerializer {
                                    .append("Networking Event");
     }
 
-    private StringBuilder serializeSessionData(List<TalkData> sessionData) {
+    private StringBuilder serializeSessionData(List<Talk> sessionData) {
         StringBuilder result = new StringBuilder();
-        for (TalkData talkData : sessionData) {
+        for (Talk talk : sessionData) {
             result.append(getFormattedCurrentTimestamp())
-                  .append(talkData.getName())
+                  .append(talk.getName())
                   .append(' ')
-                  .append(formatTalkTime(talkData))
+                  .append(formatTalkTime(talk))
                   .append(LINE_SEPARATOR);
 
-            currentTimestamp = currentTimestamp.plusMinutes(talkData.getLengthInMinutes());
+            currentTimestamp = currentTimestamp.plusMinutes(talk.getLengthInMinutes());
         }
         return result;
     }
@@ -80,8 +80,8 @@ class TrackDataToStringSerializer {
         return timestamp.format(DateTimeFormatter.ofPattern(TIMESTAMP_FORMAT));
     }
 
-    private static String formatTalkTime(TalkData talkData) {
-        final int lengthInMinutes = talkData.getLengthInMinutes();
+    private static String formatTalkTime(Talk talk) {
+        final int lengthInMinutes = talk.getLengthInMinutes();
         return lengthInMinutes == 5 ? "lightning" : lengthInMinutes + "min";
     }
 }
